@@ -12,7 +12,16 @@ app.get('/', (req,res) => {
         }).catch(err=>console.log(err));
 }) 
 
+app.post('/add', (req,res) => {
+    var {name,description} = req.body;
 
+    var service = new Service({
+        name: name,
+        description: description
+    });
+
+    service.save();
+})
 
 
 module.exports = app;

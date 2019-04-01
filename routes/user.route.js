@@ -19,16 +19,18 @@ app.get('/:userid', (req,res) => {
     })
 })
 
-// app.post('/add', (req,res) => {
-//     var {email,name,password} = req.body;
-//     var user = new User({
-//         email: email,
-//         name: name,
-//         password: password
-//     });
 
-//     user.save();
-// });
+// ADD USER
+app.post('/add', (req,res) => {
+    var {email,name,password} = req.body;
+    var user = new User({
+        email: email,
+        name: name,
+        password: password
+    });
+
+    user.save();
+});
 
 
 
