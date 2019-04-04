@@ -26,7 +26,7 @@ app.get('/', (req,res) => {
     res.json({hello: "HELLO WORLD"})
 })
 
-app.listen(3000,(err) => {
+app.listen(process.env.PORT || 3000,(err) => {
     console.log("server on");
 })
 
