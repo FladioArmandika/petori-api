@@ -12,6 +12,16 @@ app.get('/', (req,res) => {
         }).catch(err=>console.log(err));
 }) 
 
+
+app.get('/:serviceid', (req,res) => {
+    Service.findOne({_id: req.params.serviceid})
+        .populate('items')
+        .then((service) => {
+            res.send(service);
+        }).catch(err => console.log(err));
+})
+
+
 app.post('/add', (req,res) => {
     var {name,description} = req.body;
 

@@ -2,6 +2,7 @@ const express   = require('express');
 const app       = express.Router();
 
 const User      = require('../models/User');
+const Order    = require('../models/Order');
 
 app.get('/', (req,res) => {
     User.find({}).then((users) => {
@@ -15,8 +16,16 @@ app.get('/:userid', (req,res) => {
         // need to fetch data from Orders
         //
 
+        
         res.send(user)
     })
+})
+
+app.get('/:userid/order', (req,res) => {
+    Order.find({user:req.params.userid})
+        .then(order => {
+            res.send(order);
+        })
 })
 
 
