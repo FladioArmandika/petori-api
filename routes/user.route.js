@@ -15,8 +15,6 @@ app.get('/:userid', (req,res) => {
         //
         // need to fetch data from Orders
         //
-
-        
         res.send(user)
     })
 })
