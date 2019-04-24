@@ -5,18 +5,23 @@ const User      = require('../models/User');
 const Order    = require('../models/Order');
 
 app.get('/', (req,res) => {
-    User.find({}).then((users) => {
+    User.find({})
+        .populate('orders')
+        .then((users) => {
             res.send(users);
         });
 });
 
 app.get('/:userid', (req,res) => {
-    User.findOne({_id: req.params.userid}, (err,user) => {
-        //
-        // need to fetch data from Orders
-        //
-        res.send(user)
-    })
+    User.findOne({_id: req.params.userid})
+        .populate('orders')
+        .populate({
+            path: 'orders',
+            populate: { path: 'items'}
+        })
+        .then((user) => {
+            res.send(user);
+        }).catch(err => console.log(err));
 })
 
 app.get('/:userid/order', (req,res) => {

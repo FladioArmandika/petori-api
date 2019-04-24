@@ -14,6 +14,14 @@ const ItemSchema = new Schema({
         type: Number,
         required: true
     },
+    pet: {
+        type: Schema.Types.ObjectId,
+        ref: "Pet"
+    },
+    category: {
+        type: String,
+        required: true
+    },
     service: {
         type: Schema.Types.ObjectId,
         ref: "Service",

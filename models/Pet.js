@@ -9,11 +9,13 @@ var PetSchema = new Schema({
     description: {
         type: String,
         required: true
-    }
+    },
+    items: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Item'
+        }
+    ]
 })
 
 module.exports = mongoose.model('Pet', PetSchema);
-
-
-
-
