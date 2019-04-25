@@ -4,7 +4,7 @@ const app       = express.Router();
 // MODEL
 const Item      = require('../models/Item');
 
-app.get('/', (req,res) => {
+app.get('/', (req,res) => { 
     Item.find({}).then(item => { 
         res.send(item);
     })
