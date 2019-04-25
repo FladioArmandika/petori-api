@@ -5,7 +5,7 @@ const app       = express.Router();
 const Item      = require('../models/Item');
 
 app.get('/', (req,res) => {
-    Item.find({}).then(item => {
+    Item.find({}).then(item => { 
         res.send(item);
     })
 })
@@ -16,6 +16,12 @@ app.get('/:itemid', (req,res) => {
     })
 })
 
+app.get('/c/:category', (req,res) => {
+    Item.find({category: req.params.category})
+        .then((items) => {
+            res.send(items);  
+        })
+})
 
 module.exports = app;
 
