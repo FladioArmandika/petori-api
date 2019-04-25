@@ -20,7 +20,7 @@ app.get('/c/:category', (req,res) => {
     Item.find({category: req.params.category})
         .then((items) => {
             res.send(items);  
-        })
+        }); 
 })
 
 module.exports = app;
