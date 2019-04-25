@@ -6,7 +6,7 @@ const Order = require('../models/Order');
 
 
 
-app.get('/:userid', (req,res) => {
+app.get('/u/:userid', (req,res) => {
 
     // Order.find({ user: "5c9cd427aac061161c602380" })
     //     .populate('items')
@@ -36,32 +36,64 @@ app.get('/', (req,res) => {
 
 // make order
 app.post('/make', (req,res) => {
-    var userId = req.query('userid');
-    var {
-        items,
-        address,
-        city
-    } = req.body;
+    var userId = req.query.userid;
+
+    var city = req.body.city;
+    var address = req.body.address;
+    var items = req.body.items;
 
 
     var order = new Order({
-        user: userId,
-        dateOrdered: new Date().toISOString(),
+        user: userId, 
+        dateOrdered: new Date().toISOString().toString(),
         city: city,
+        dateConfirm: '',
+        dateComplete: '',
+        status: 'ordered', 
         address: address,
-        items: items
-    })
+        items: items 
+    })  
 
-    User.findOne({_id: userId})
-        .then((user) => {
-            order.save();
+    order.save()
+        .then( o => {
+            User.findByIdAndUpdate(userId, { '$push': {'orders': o._id}})
+                .then(() => {
+                    console.log("push success");
+                });
 
-            user.orders.push(order);
-            user.save();
-        }).catch(err => {
+        }) 
+        .catch((err) => {
             console.log(err);
-        })
+        }) 
+ 
+    // User.findOne({_id: userId}) 
+        // .then((user) => {
+            
 
+            // user.orders.push(order); 
+            // user.save();
+        // }) 
+
+    return order;
+})
+
+// ORDER CONFIRM BY 
+app.get('/o/:orderid/confirm', (req,res) => {
+    Order.findOneAndUpdate({_id: req.params.orderid}, 
+        {'$set': {status: "confirm",dateConfirm: new Date().toISOString()}})
+        .then( (o) => {
+            res.send(o);
+        })
+})
+
+
+
+app.get('/o/:orderid/complete', (req,res) => {
+    Order.findOneAndUpdate({_id: req.params.orderid}, 
+        {'$set': {status: "complete",dateConfirm: new Date().toISOString()}})
+        .then( (o) => {
+            res.send(o);
+        })
 })
 
 

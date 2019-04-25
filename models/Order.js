@@ -14,11 +14,9 @@ const OrderSchema = new Schema({
     },
     city: {
         type: String,
-        required: true
     },
     address: {
         type: String,
-        required: true
     },
     status: {
         type: String,
