@@ -16,12 +16,22 @@ app.get('/u/:userid', (req,res) => {
     require('mongoose').set('debug', true);
     ObjectId = require('mongoose').Types.ObjectId;
  
-    Order.find({_id: req.params.userid}, (err,order) => {
+    Order.find({user: req.params.userid}, (err,order) => {
         res.send(order);
     }) 
-
-
 })
+
+app.get('/u/:userid/:status', (req,res) => {
+    Order.find({
+        user: req.params.userid,
+        status: req.params.status})
+        .populate('user')
+        .populate('items')
+        .then(orders => {
+            res.send(orders);
+        });
+})
+
 
 app.get('/', (req,res) => {
     Order.find({})
@@ -77,6 +87,15 @@ app.post('/make', (req,res) => {
     return order;
 })
 
+app.get('/o/:orderid', (req,res) => {
+    Order.findOne({_id:req.params.orderid})
+        .populate('items')
+        .populate('user')
+        .then(order => {
+            res.send(order);
+        })
+})
+
 // ORDER CONFIRM BY 
 app.get('/o/:orderid/confirm', (req,res) => {
     Order.findOneAndUpdate({_id: req.params.orderid}, 
@@ -87,7 +106,7 @@ app.get('/o/:orderid/confirm', (req,res) => {
 })
 
 
-
+// ORDER COMPLETE
 app.get('/o/:orderid/complete', (req,res) => {
     Order.findOneAndUpdate({_id: req.params.orderid}, 
         {'$set': {status: "complete",dateConfirm: new Date().toISOString()}})
