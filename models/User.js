@@ -16,11 +16,10 @@ const UserSchema = new Schema({
     },
     city: {
         type: String,
-        required: true,
+        required: true
     },
     address: {
         type: String,
-        required: true,
     },
     orders: [
         {
