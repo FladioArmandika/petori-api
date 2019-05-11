@@ -8,7 +8,8 @@ const app   = express();
 const UserIndex     = require('./routes/user.route')
 const ServiceIndex  = require('./routes/service.route')
 const ItemIndex     = require('./routes/item.route')
-const OrderIndex     = require('./routes/order.route')
+const OrderIndex    = require('./routes/order.route')
+const GoodsIndex    =  require('./routes/goods.route')
 
 mongoose
     .connect('mongodb://fladioarmandika:91378531fladioarmandika@ds227146.mlab.com:27146/petori')
@@ -23,6 +24,7 @@ app.use('/user',UserIndex);
 app.use('/service', ServiceIndex);
 app.use('/item', ItemIndex);
 app.use('/order', OrderIndex);
+app.use('/goods', GoodsIndex);
 
 app.get('/', (req,res) => {
     res.json({hello: "HELLO WORLD"})

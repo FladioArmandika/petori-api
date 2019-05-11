@@ -61,7 +61,8 @@ app.post('/make', (req,res) => {
         dateComplete: '',
         status: 'ordered', 
         address: address,
-        items: items 
+        items: items,
+        goods: goods
     })  
 
     order.save()
