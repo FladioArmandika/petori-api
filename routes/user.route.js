@@ -27,6 +27,18 @@ app.get('/:userid', (req,res) => {
         }).catch(err => console.log(err));
 })
 
+app.get('/e/:email', (req,res) => {
+    User.findOne({email: req.params.email})
+        .populate('orders')
+        .populate({
+            path: 'orders',
+            populate: { path: 'items'}
+        })
+        .then((user) => {
+            res.send(user);
+        }).catch(err => console.log(err));
+})
+
 app.get('/:userid/order', (req,res) => {
     Order.find({user:req.params.userid})
         .then(order => {
